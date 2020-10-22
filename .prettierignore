@@ -1,0 +1,10 @@
+# package
+package.json
+package-lock.json
+
+# git
+.gitignore
+.git
+
+# node_modules
+node_modules/
