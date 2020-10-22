@@ -2,6 +2,7 @@ const path = require('path');
 
 const express = require('express');
 require('dotenv').config();
+const mongoose = require('mongoose');
 
 const app = express();
 
@@ -16,6 +17,14 @@ app.use((req, res, next) => {
   res.status(404).send('404');
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server is running at PORT: ${process.env.PORT}`);
-});
+mongoose
+  .connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then((result) => {
+    app.listen(process.env.PORT);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
