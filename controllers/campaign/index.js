@@ -1,3 +1,7 @@
+const mongoose = require('mongoose');
+
+const Campaign = require('../../models/campaign');
+
 exports.getAllCampaigns = (req, res, next) => {
   res.send('Get All Campaigns');
 };
@@ -7,8 +11,18 @@ exports.getCampaignById = (req, res, next) => {
   res.send(`Get Campaign ID = ${campaignId}`);
 };
 
-exports.postAddCampaign = (req, res, next) => {
-  res.send(`Post Add Campaign`);
+exports.postAddCampaign = async (req, res, next) => {
+  const { name, linkFacebook, userId } = req.body;
+
+  const campaign = new Campaign({ name, userId, linkFacebook });
+
+  try {
+    const result = await campaign.save();
+    return res.status(201).send(result);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send(error);
+  }
 };
 
 exports.deleteCampaignById = (req, res, next) => {
