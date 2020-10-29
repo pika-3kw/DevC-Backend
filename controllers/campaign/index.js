@@ -1,5 +1,3 @@
-const mongoose = require('mongoose');
-
 const Campaign = require('../../models/campaign');
 
 exports.getAllCampaigns = (req, res, next) => {
@@ -25,12 +23,19 @@ exports.postAddCampaign = async (req, res, next) => {
   }
 };
 
-exports.deleteCampaignById = (req, res, next) => {
+exports.deleteCampaignById = async (req, res, next) => {
   const campaignId = req.params.id;
-  res.send(`Delete Campaign ID = ${campaignId}`);
+
+  try {
+    const result = await Campaign.deleteOne({ _id: campaignId });
+    return res.status(201).send(result);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send(error);
+  }
 };
 
-exports.putCampaignById = (req, res, next) => {
+exports.putUpdateCampaignById = (req, res, next) => {
   const campaignId = req.params.id;
   res.send(`Update Campaign ID = ${campaignId}`);
 };
