@@ -15,11 +15,25 @@ const facebookSchema = new Schema({
 });
 
 const userSchema = new Schema({
-  name: String,
-  email: String,
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
   password: String,
   avatarUrl: String,
   facebook: facebookSchema,
+  campaigns: [
+    {
+      campaignId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Campaign',
+      },
+    },
+  ],
 });
 
-module.exports = mongoose.model('user', userSchema);
+module.exports = mongoose.model('User', userSchema);
