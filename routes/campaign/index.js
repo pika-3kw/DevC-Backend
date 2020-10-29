@@ -10,8 +10,8 @@ router.get('/:id', campaignController.getCampaignById);
 
 router.post('/add', campaignController.postAddCampaign);
 
-router.delete('/:id', campaignController.deleteCampaignById);
+router.delete('/delete/:id', campaignController.deleteCampaignById);
 
-router.put('/:id', campaignController.putCampaignById);
+router.put('/update/:id', campaignController.putUpdateCampaignById);
 
 module.exports = router;
