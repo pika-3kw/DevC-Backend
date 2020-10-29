@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 
 const authRoutes = require('./routes/auth');
 
+const campaignRoutes = require('./routes/campaign');
+
 const app = express();
 
 // app.use(require('body-parser').urlencoded({ extended: false }));
@@ -17,6 +19,8 @@ app.get('/', (req, res, next) => {
 });
 
 app.use('/auth', authRoutes);
+
+app.use('/campaign', campaignRoutes);
 
 app.use((req, res, next) => {
   res.status(404).send('404');
