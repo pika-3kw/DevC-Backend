@@ -1,11 +1,27 @@
 const Campaign = require('../../models/campaign');
 
-exports.getAllCampaigns = (req, res, next) => {
-  res.send('Get All Campaigns');
+exports.getAllCampaigns = async (req, res, next) => {
+  try {
+    const result = await Campaign.find();
+    res.status(200).send(result);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send(error);
+  }
 };
 
-exports.getCampaignById = (req, res, next) => {
+exports.getCampaignById = async (req, res, next) => {
   const campaignId = req.params.id;
+
+  try {
+    const campaign = await Campaign.findById(campaignId);
+
+    res.status(200).send(campaign);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send(error);
+  }
+
   res.send(`Get Campaign ID = ${campaignId}`);
 };
 
