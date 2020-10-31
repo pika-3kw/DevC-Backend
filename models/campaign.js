@@ -12,18 +12,18 @@ const campaignSchema = new Schema({
     ref: 'User',
     required: true,
   },
-  linkFacebook: [
+  posts: [
     {
       type: {
         type: String,
         required: true,
         enum: ['fanpage', 'group'],
       },
-      parentId: {
+      fbParentId: {
         type: String,
         required: true,
       },
-      postId: {
+      fbPostId: {
         type: String,
         required: true,
       },
