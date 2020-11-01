@@ -1,4 +1,6 @@
+const mongoose = require('mongoose');
 const Campaign = require('../../models/campaign');
+const Post = require('../../models/post');
 
 exports.getAllCampaigns = async (req, res, next) => {
   try {
@@ -26,13 +28,20 @@ exports.getCampaignById = async (req, res, next) => {
 };
 
 exports.postAddCampaign = async (req, res, next) => {
-  const { name, linkFacebook, userId } = req.body;
+  let { name, userId, posts } = req.body;
 
-  const campaign = new Campaign({ name, userId, linkFacebook });
+  const campaign = new Campaign({ name, createdBy: userId });
 
   try {
-    const result = await campaign.save();
-    return res.status(201).send(result);
+    const campaignResult = await campaign.save();
+
+    posts = posts.map((post) => ({
+      ...post,
+      campaign: mongoose.Types.ObjectId(campaignResult._id),
+    }));
+
+    const postResult = await Post.insertMany(posts);
+    return res.status(201).send({ campaignResult, postResult });
   } catch (error) {
     console.log(error);
     return res.status(500).send(error);
