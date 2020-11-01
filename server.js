@@ -20,7 +20,7 @@ app.get('/', (req, res, next) => {
 
 app.use('/auth', authRoutes);
 
-app.use('/campaign', campaignRoutes);
+app.use('/campaigns', campaignRoutes);
 
 app.use((req, res, next) => {
   res.status(404).send('404');

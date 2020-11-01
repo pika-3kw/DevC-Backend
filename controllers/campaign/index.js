@@ -60,7 +60,7 @@ exports.deleteCampaignById = async (req, res, next) => {
   }
 };
 
-exports.putUpdateCampaignById = (req, res, next) => {
+exports.putCampaignById = (req, res, next) => {
   const campaignId = req.params.id;
   res.send(`Update Campaign ID = ${campaignId}`);
 };
