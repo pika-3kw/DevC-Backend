@@ -15,7 +15,6 @@ const campaignSchema = new Schema({
   posts: [
     {
       type: Schema.Types.ObjectId,
-      required: true,
       ref: 'Post',
     },
   ],
