@@ -15,25 +15,19 @@ const facebookSchema = new Schema({
 });
 
 const userSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-  },
+  name: String,
+  email: String,
   password: String,
   avatarUrl: String,
   facebook: facebookSchema,
   campaigns: [
     {
-      campaignId: {
-        type: Schema.Types.ObjectId,
-        ref: 'Campaign',
-      },
+      type: Schema.Types.ObjectId,
+      ref: 'Campaign',
     },
   ],
 });
+
+userSchema.set('timestamps', true);
 
 module.exports = mongoose.model('User', userSchema);

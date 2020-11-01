@@ -7,32 +7,20 @@ const campaignSchema = new Schema({
     type: String,
     required: true,
   },
-  userId: {
+  createdBy: {
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true,
   },
   posts: [
     {
-      type: {
-        type: String,
-        required: true,
-        enum: ['fanpage', 'group'],
-      },
-      fbParentId: {
-        type: String,
-        required: true,
-      },
-      fbPostId: {
-        type: String,
-        required: true,
-      },
-      link: {
-        type: String,
-        required: true,
-      },
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'Post',
     },
   ],
 });
+
+campaignSchema.set('timestamps', true);
 
 module.exports = mongoose.model('Campaign', campaignSchema);
