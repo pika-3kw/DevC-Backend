@@ -6,4 +6,6 @@ const router = express.Router();
 
 router.post('/login', facebookAuthController.postLogin);
 
+router.post('/check-token', facebookAuthController.postCheckToken);
+
 module.exports = router;
