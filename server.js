@@ -8,14 +8,21 @@ const authRoutes = require('./routes/auth');
 
 const campaignRoutes = require('./routes/campaign');
 
+mongoose.set('useFindAndModify', false);
+
 const app = express();
 
 // app.use(require('body-parser').urlencoded({ extended: false }));
 app.use(require('body-parser').json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use((req, res, next) => {
+  console.log(req.url);
+  next();
+});
+
 app.get('/', (req, res, next) => {
-  res.send('Homepage');
+  res.json({ message: 'Homepage' });
 });
 
 app.use('/auth', authRoutes);

@@ -3,10 +3,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const facebookSchema = new Schema({
+  _id: false,
   id: String,
+  token: String,
   accounts: {
     data: [
       {
+        _id: false,
         id: String,
         name: String,
       },
