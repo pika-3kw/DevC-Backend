@@ -8,7 +8,7 @@ router.get('/', campaignController.getAllCampaigns);
 
 router.get('/:id', campaignController.getCampaignById);
 
-router.post('/add', campaignController.postAddCampaign);
+router.post('/', campaignController.postCampaign);
 
 router.delete('/:id', campaignController.deleteCampaignById);
 

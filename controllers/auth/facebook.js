@@ -9,6 +9,7 @@ const User = require('../../models/user');
 exports.postLogin = async (req, res) => {
   let { fbToken } = req.body;
   let fbInfo;
+
   try {
     fbToken = await getLongLivedToken(fbToken);
     fbInfo = await getFacebookInfo(fbToken);
@@ -47,7 +48,6 @@ exports.postLogin = async (req, res) => {
 
 exports.postCheckToken = async (req, res) => {
   const { jwtToken } = req.body;
-  let fbInfo;
 
   let userId, fbToken;
 
@@ -71,8 +71,6 @@ exports.postCheckToken = async (req, res) => {
       return res.json({ access: false });
     }
     res.json({ access: true });
-
-    return res.json(fbInfo);
   } catch (error) {
     console.log(error);
   }

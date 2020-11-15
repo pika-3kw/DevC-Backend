@@ -8,11 +8,15 @@ const authRoutes = require('./routes/auth');
 
 const campaignRoutes = require('./routes/campaign');
 
+const facebookRoutes = require('./routes/facebook');
+
+const requireToken = require('./middleware/requireToken');
+
 mongoose.set('useFindAndModify', false);
 
 const app = express();
 
-// app.use(require('body-parser').urlencoded({ extended: false }));
+app.use(require('body-parser').urlencoded({ extended: false }));
 app.use(require('body-parser').json());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -27,7 +31,9 @@ app.get('/', (req, res, next) => {
 
 app.use('/auth', authRoutes);
 
-app.use('/campaigns', campaignRoutes);
+app.use('/campaign', requireToken, campaignRoutes);
+
+app.use('/facebook', requireToken, facebookRoutes);
 
 app.use((req, res, next) => {
   res.status(404).send('404');

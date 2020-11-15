@@ -27,10 +27,12 @@ exports.getCampaignById = async (req, res, next) => {
   res.send(`Get Campaign ID = ${campaignId}`);
 };
 
-exports.postAddCampaign = async (req, res, next) => {
-  let { name, userId, posts } = req.body;
+exports.postCampaign = async (req, res, next) => {
+  let { name, posts } = req.body;
 
-  const campaign = new Campaign({ name, createdBy: userId });
+  const user = req.user;
+
+  const campaign = new Campaign({ name, createdBy: user._id });
 
   try {
     const campaignResult = await campaign.save();
@@ -40,8 +42,9 @@ exports.postAddCampaign = async (req, res, next) => {
       campaign: mongoose.Types.ObjectId(campaignResult._id),
     }));
 
-    const postResult = await Post.insertMany(posts);
-    return res.status(201).send({ campaignResult, postResult });
+    await Post.insertMany(posts);
+
+    return res.status(201).send('Done');
   } catch (error) {
     console.log(error);
     return res.status(500).send(error);
