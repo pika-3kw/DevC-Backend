@@ -6,4 +6,6 @@ const router = express.Router();
 
 router.get('/:id/feed', facebookController.getFeed);
 
+router.get('/:id/comment', facebookController.getComments);
+
 module.exports = router;
