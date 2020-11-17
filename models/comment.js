@@ -7,9 +7,19 @@ const commentSchema = new Schema({
     type: String,
     required: true,
   },
+  message_raw: {
+    type: String,
+    required: true,
+  },
   id: {
     type: String,
     required: true,
+    unique: true,
+    index: true,
+  },
+  from: {
+    name: String,
+    id: String,
   },
   created_time: {
     type: String,
@@ -21,45 +31,23 @@ const commentSchema = new Schema({
   },
   message_tags: [
     {
-      id: {
-        type: String,
-        required: true,
-      },
-      name: {
-        type: String,
-        required: true,
-      },
-      offset: {
-        type: Number,
-        required: true,
-      },
-      length: {
-        type: Number,
-        required: true,
-      },
+      name: String,
+      offset: Number,
+      length: Number,
     },
   ],
-  from: {
-    name: {
-      type: String,
-      required: true,
-    },
-    id: {
-      type: String,
-      required: true,
-    },
-  },
-  parent: {
-    id: {
-      type: String,
-      required: true,
-    },
-  },
+  parent: String,
   post: {
     type: Schema.Types.ObjectId,
     ref: 'Campaign',
     required: true,
   },
+  label: {
+    type: Number,
+    default: '',
+  },
 });
+
+// commentSchema.path('id').index({ unique: true });
 
 module.exports = mongoose.model('Comment', commentSchema);
