@@ -3,8 +3,10 @@ const Campaign = require('../../models/campaign');
 const Post = require('../../models/post');
 
 exports.getAllCampaigns = async (req, res, next) => {
+  const userId = req.user._id;
+
   try {
-    const result = await Campaign.find();
+    const result = await Campaign.find({ createdBy: userId });
     res.status(200).send(result);
   } catch (error) {
     console.log(error);
@@ -44,7 +46,7 @@ exports.postCampaign = async (req, res, next) => {
 
     await Post.insertMany(posts);
 
-    return res.status(201).send('Done');
+    return res.status(201).send(campaignResult);
   } catch (error) {
     console.log(error);
     return res.status(500).send(error);
