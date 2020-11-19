@@ -17,9 +17,9 @@ module.exports = async (req, res, next) => {
     const user = await User.findById(userId);
 
     req.user = user;
+    next();
   } catch (error) {
     console.log(error);
+    res.status(401).send({ message: 'Unauthorized' });
   }
-
-  next();
 };

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Campaign = require('../../models/campaign');
 const Post = require('../../models/post');
+const User = require('../../models/user');
 
 exports.getAllCampaigns = async (req, res, next) => {
   const userId = req.user._id;
@@ -55,10 +56,19 @@ exports.postCampaign = async (req, res, next) => {
 
 exports.deleteCampaignById = async (req, res, next) => {
   const campaignId = req.params.id;
+  const userID = req.user._id;
 
   try {
+    const user = await User.findById(userID);
+
+    if (!user) {
+      return res.status(401).send(user);
+    }
     const result = await Campaign.deleteOne({ _id: campaignId });
-    return res.status(201).send(result);
+    if (result.deletedCount === 1) {
+      return res.status(201).send({ message: 'OK' });
+    }
+    res.status(304).send({ message: 'False' });
   } catch (error) {
     console.log(error);
     return res.status(500).send(error);
